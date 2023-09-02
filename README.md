@@ -9,7 +9,47 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## Install and Run
 
-to be added.
+### Clone the Repository:
+Clone the repository and using this command on terminal.
+```commandline
+git clone https://github.com/SmileyFaceZ/ku-polls.git
+```
+
+### Installing:
+
+To check that your are working on the correct directory (ku-polls), use this command.
+
+Windows
+```commandline
+cd
+```
+
+macOS / Linux:
+```commandline
+pwd
+```
+
+If you are not in the correct directory, change to the project directory before proceeding with the installation.
+```commandline
+cd ku-polls
+```
+
+Installing the required modules by using code blocks
+```commandline
+pip install -r requirements.txt
+```
+
+To check if all modules are installed, use this command.
+```commandline
+pip list
+```
+
+### Running the server:
+Run the following command to start the server.
+```commandline
+python manage.py runserver
+```
+To stop the server, you can press `Ctrl-C` in the terminal.
 
 ## Project Documents
 
