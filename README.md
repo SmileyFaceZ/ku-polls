@@ -44,6 +44,11 @@ To check if all modules are installed, use this command.
 pip list
 ```
 
+To create a new database using this command.
+```commandline
+python manage.py migrate
+```
+
 ### Running the server:
 Run the following command to start the server.
 ```commandline
@@ -59,6 +64,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Requirements](../../wiki/Requirements)
 - [Development Plan](../../wiki/Development-Plan)
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan)
+- [Iteration 2 Plan](../../wiki/Iteration-2-Plan)
 - [Project Board](../../projects?query=is%3Aopen)
 
 [django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
