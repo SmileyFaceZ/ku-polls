@@ -8,36 +8,6 @@ from .models import Question
 # Create your tests here.
 
 
-class QuestionModelTests(TestCase):
-
-    def test_was_published_recently_with_future_question(self) -> None:
-        """
-        was_published_recently() returns False for questions whose pub_date
-        is in the future.
-        """
-        time = timezone.now() + datetime.timedelta(days=30)
-        future_question = Question(pub_date=time)
-        self.assertIs(future_question.was_published_recently(), False)
-
-    def test_was_published_recently_with_old_question(self) -> None:
-        """
-        was_published_recently() returns False for questions whose pub_date
-        is older than 1 day.
-        """
-        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-        old_question = Question(pub_date=time)
-        self.assertIs(old_question.was_published_recently(), False)
-
-    def test_was_published_recently_with_recent_question(self) -> None:
-        """
-        was_published_recently() returns True for questions whose pub_date
-        is within the last day.
-        """
-        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-        recent_question = Question(pub_date=time)
-        self.assertIs(recent_question.was_published_recently(), True)
-
-
 def create_question(question_text, days):
     """
     Create a question with the given `question_text` and published the
@@ -46,6 +16,57 @@ def create_question(question_text, days):
     """
     time = timezone.now() + datetime.timedelta(days=days)
     return Question.objects.create(question_text=question_text, pub_date=time)
+
+
+class QuestionModelTests(TestCase):
+
+    def test_was_published_recently_with_future_question(self) -> None:
+        """
+        was_published_recently() returns False for questions whose pub_date is in the future.
+        """
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_old_question(self) -> None:
+        """
+        was_published_recently() returns False for questions whose pub_date is older than 1 day.
+        """
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_question = Question(pub_date=time)
+        self.assertIs(old_question.was_published_recently(), False)
+
+    def test_was_published_recently_with_recent_question(self) -> None:
+        """
+        was_published_recently() returns True for questions whose pub_date is within the last day.
+        """
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        recent_question = Question(pub_date=time)
+        self.assertIs(recent_question.was_published_recently(), True)
+
+    def test_is_published_question_with_future(self) -> None:
+        """
+        is_published() returns False for questions with a publication date in the future.
+        """
+        future_time = timezone.now() + datetime.timedelta(days=1)
+        future_question = Question(pub_date=future_time)
+        self.assertIs(future_question.is_published(), False)
+
+    def test_is_published_question_with_now(self) -> None:
+        """
+        is_published() returns True for questions with a publication date set to now.
+        """
+        current_time = timezone.now()
+        now_question = Question(pub_date=current_time)
+        self.assertIs(now_question.is_published(), True)
+
+    def test_is_published_question_with_past(self) -> None:
+        """
+        is_published() returns True for questions with a publication date in yesterday.
+        """
+        past_time = timezone.now() - datetime.timedelta(days=1)
+        past_question = Question(pub_date=past_time)
+        self.assertIs(past_question.is_published(), True)
 
 
 class QuestionIndexViewTests(TestCase):
@@ -60,8 +81,7 @@ class QuestionIndexViewTests(TestCase):
 
     def test_past_question(self):
         """
-        Questions with a pub_date in the past are displayed on the
-        index page.
+        Questions with a pub_date in the past are displayed on the index page.
         """
         question = create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse('polls:index'))
@@ -72,8 +92,7 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_question(self):
         """
-        Questions with a pub_date in the future aren't displayed on
-        the index page.
+        Questions with a pub_date in the future aren't displayed on the index page.
         """
         create_question(question_text="Future question.", days=30)
         response = self.client.get(reverse('polls:index'))
@@ -82,8 +101,7 @@ class QuestionIndexViewTests(TestCase):
 
     def test_future_question_and_past_question(self):
         """
-        Even if both past and future questions exist, only past questions
-        are displayed.
+        Even if both past and future questions exist, only past questions are displayed.
         """
         question = create_question(question_text="Past question.", days=-30)
         create_question(question_text="Future question.", days=30)
@@ -119,8 +137,7 @@ class QuestionDetailViewTests(TestCase):
 
     def test_past_question(self):
         """
-        The detail view of a question with a pub_date in the past
-        displays the question's text.
+        The detail view of a question with a pub_date in the past displays the question's text.
         """
         past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
