@@ -1,10 +1,30 @@
-<fieldset>
-    <legend><h1>{{ question.question_text }}</h1></legend>
-    <ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes| pluralize }}</li>
-{% endfor %}
-</ul>
-</fieldset>
-
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Results</title>
+</head>
+<body>
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        <table border="2">
+            <thead>
+                <th>Question</th>
+                <th>Total Votes</th>
+            </thead>
+            <tbody>
+                {% for choice in question.choice_set.all %}
+                <tr>
+                    <td>{{ choice.choice_text }}</td>
+                    <td>{{ choice.votes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </fieldset>
+    <a href="{% url 'polls:detail' question.id %}"><button type="button">Vote again?</button></a>
+</body>
+</html>
