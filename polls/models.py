@@ -34,6 +34,9 @@ class Question(models.Model):
         """
         Returns True if the question is published and the current time is between the publication date and end date.
         """
+        if self.end_date is None:
+            return self.is_published()
+
         now = timezone.now()
         return self.pub_date <= now <= self.end_date
 
