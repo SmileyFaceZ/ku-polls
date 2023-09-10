@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="en">
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/results_style.css' %}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1246/1246239.png">
     <title>Results</title>
 </head>
 <body>
     <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
-        <table border="2">
+        <legend><h1 class="question-text">{{ question.question_text }}</h1></legend>
+        <table border="2" cellpadding="5px;" cellspacing="3px;">
             <thead>
-                <th>Question</th>
-                <th>Total Votes</th>
+                <th style="width:680px">Question</th>
+                <th>Votes</th>
             </thead>
             <tbody>
                 {% for choice in question.choice_set.all %}
@@ -23,8 +28,16 @@
                 </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total Votes</td>
+                    <td>{{ total_votes }}</td>
+                </tr>
+            </tfoot>
         </table>
     </fieldset>
-    <a href="{% url 'polls:detail' question.id %}"><button type="button">Vote again?</button></a>
+    <a href="{% url 'polls:index' %}" class="home-btn">
+        <img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/home-button-icon.png" style="width:40px;height:40px;">
+    </a>
 </body>
 </html>
