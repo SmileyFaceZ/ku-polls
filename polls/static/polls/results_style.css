@@ -1,0 +1,38 @@
+body {
+    background: white url("images/background.png") no-repeat;
+}
+
+table td {
+    font-family: Courier, monospace;
+    border: 1px solid #176B87;
+    border-collapse: collapse;
+    border-radius: 6px;
+    border-style: groove;
+}
+
+td:hover {
+    background-color: #93B1A6;
+}
+
+th {
+    font-family: Courier, monospace;
+    background-color: #9EB384;
+}
+
+td {
+    background-color: #CEDEBD;
+    padding: 5px;
+}
+
+tfoot td {
+    background-color: #FAF1E4;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.question-text {
+    font-family: Courier, monospace;
+    color: #7EAA92;
+}

@@ -52,6 +52,14 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+    def get(self, request: HttpRequest, **kwargs) -> HttpResponse:
+        question = get_object_or_404(Question, pk=kwargs['pk'])
+        total_votes = sum([choice.votes for choice in question.choice_set.all()])
+        if question.can_vote():
+            return render(request, 'polls/results.html', {'question': question, 'total_votes': total_votes})
+        else:
+            raise Http404
+
 
 def index(request: HttpRequest) -> HttpResponse:
     """ Index view for the polls app.
