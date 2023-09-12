@@ -22,4 +22,5 @@ urlpatterns = [
     path("", RedirectView.as_view(url="polls/")),
     path("admin/", admin.site.urls),
     path("polls/", include("polls.urls")),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
