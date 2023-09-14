@@ -16,7 +16,7 @@
             <h1 style="color:MediumSeaGreen; text-align:center;">{{ question.question_text }}</h1>
         </legend>
         <hr>
-        {% if question.id == 3 %}
+        {% if question.id == 2 %}
         <div style="padding-left: 50px; padding-bottom: 30px;">
             <img src="https://en.eng.ku.ac.th/wp-content/uploads/2023/03/EngineeringZone-Eng-1-1024x765.jpg" alt="KU Engineering Building" title="KU Engineering Building" width="500" height="400">
         </div>
@@ -36,6 +36,7 @@
         {% endfor %}
         <hr>
         <button class="btn btn-success" type="submit">Vote</button>
+
         <a href="{% url 'polls:index' %}"><button type="button" class="btn btn-info">Home</button></a>
         <a href="{% url 'polls:results' question.id %}"><button type="button" class="btn btn-warning">Results</button></a>
         </ul>

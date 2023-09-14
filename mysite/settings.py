@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 LOGIN_REDIRECT_URL = 'polls:index'    # after login, show list of polls
+LOGOUT_REDIRECT_URL = 'login'
 
 AUTHENTICATION_BACKENDS = [
     # username & password authentication

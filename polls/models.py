@@ -42,10 +42,27 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    """ Represents a choice for a poll question."""
+    """ Represents a choice for a poll question. """
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    # votes = models.IntegerField(default=0)
+
+    @property
+    def votes(self) -> int:
+        # count the vote for this choice
+        # count = Vote.objects.filter(choice=self).count()
+        return self.vote_set.count()
 
     def __str__(self) -> str:
         return self.choice_text
+
+
+class Vote(models.Model):
+    """ Records a vote of a Choice ny a User. """
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    # date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        pass
+        # return f"{self.user.username} voted for {self.choice.choice_text}"
