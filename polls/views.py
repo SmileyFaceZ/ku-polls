@@ -29,7 +29,7 @@ class IndexView(generic.ListView):
         Returns:
             QuerySet: A queryset containing the latest published questions.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
@@ -65,45 +65,6 @@ class ResultsView(generic.DetailView):
             raise Http404
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    """ Index view for the polls app.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered index.html.
-    """
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
-
-
-def detail(request: HttpRequest, question_id: int) -> HttpResponse:
-    """ Detail view for the polls app.
-
-    Args:
-        request (HttpRequest): Object that contains metadata about the request.
-        question_id (int): The id of the question.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered detail.html.
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
-
-
-def results(request: HttpRequest, question_id: int) -> HttpResponse:
-    """ Results view for the polls app.
-
-    Args:
-        request (HttpRequest): Object that contains metadata about the request.
-        question_id (int): The id of the question.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered results.html.
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
-
-
 @login_required
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     """ Vote view for the polls app.
@@ -137,6 +98,8 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     if not this_user.is_authenticated:
         return redirect('login')
     else:
+        print("current user is", this_user.id, "login", this_user.username)
+        print("Real name:", this_user.first_name, this_user.last_name)
         try:
             # find a vote for this user and this question
             vote = Vote.objects.get(user=this_user, choice__question=question)
