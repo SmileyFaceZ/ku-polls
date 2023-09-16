@@ -10,8 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
-# Create your views here.
-
 
 class IndexView(generic.ListView):
     """ Index view for the polls app.
@@ -75,7 +73,9 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     Returns:
         HttpResponse: A HttpResponse object containing the rendered results.html.
     """
+
     question = get_object_or_404(Question, pk=question_id)
+    this_user = request.user
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
 
@@ -85,57 +85,35 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
             'error_message': "You didn't select a choice.",
         })
 
-    """
-    if the user has a vote for this question:
-        update his vote for selected_choice
-        save it
-    else:
-        create a new vote for this yuser and Choice 
-        save it
-    """
-
-    this_user = request.user
     if not this_user.is_authenticated:
         return redirect('login')
     else:
-        print("current user is", this_user.id, "login", this_user.username)
-        print("Real name:", this_user.first_name, this_user.last_name)
         try:
-            # find a vote for this user and this question
             vote = Vote.objects.get(user=this_user, choice__question=question)
-            # update his vote
             vote.choice = selected_choice
 
         except Vote.DoesNotExist:
-            vote = Vote(user=this_user, choice=selected_choice)
-            # vote = Vote.objects.create(user=this_user, choice=selected_choice)  -- another way to create Objects
+            vote = Vote.objects.create(user=this_user, choice=selected_choice)
 
     vote.save()
-    # TODO: Use message to display a confirmation on the results page.
-
-    # selected_choice.votes += 1
-    # selected_choice.save()
 
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-def signup(request):
+def signup(request) -> HttpResponse:
     """Register a new user."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid(): 
             form.save()
-            # get named fields from the form data
             username = form.cleaned_data.get('username')
-            # password input field is named 'password1'
             raw_passwd = form.cleaned_data.get('password1')
-            user = authenticate(username=username,password=raw_passwd)
+            user = authenticate(username=username, password=raw_passwd)
             login(request, user)
+
         return redirect('polls:index')
-        # what if form is not valid?
-        # we should display a message in signup.html
+
     else:
-        # create a user form and display it the signup page
         form = UserCreationForm()
 
     return render(request, 'registration/signup.html', {'form': form})

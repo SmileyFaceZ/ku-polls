@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Signup</title>
 </head>
 <body>
-  <h2>Register</h2>
-  <form method="POST">
-    {% csrf_token %}
-    <table style="padding: 2ex;">
-      {{ form.as_table }}
-      <tr>
-        <td colspan="2">
-        <button type="submit">Register</button>
-        </td>
-      </tr>
-    </table>
-  </form>
-
+    <h2>Signup</h2>
+    <form method="POST" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Signup</button>
+                    <input type="hidden" name="next" value="{{ next }}">
+                </td>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>
