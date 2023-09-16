@@ -63,42 +63,6 @@ class ResultsView(generic.DetailView):
             raise Http404
 
 
-# @login_required
-# def vote(request: HttpRequest, question_id: int) -> HttpResponse:
-#     """ Vote view for the polls app.
-#     Args:
-#         request (HttpRequest): Object that contains metadata about the request.
-#         question_id (int): The id of the question.
-#
-#     Returns:
-#         HttpResponse: A HttpResponse object containing the rendered results.html.
-#     """
-#
-#     question = get_object_or_404(Question, pk=question_id)
-#     this_user = request.user
-#     try:
-#         selected_choice = question.choice_set.get(pk=request.POST['choice'])
-#
-#     except (KeyError, Choice.DoesNotExist):
-#         return render(request, 'polls/detail.html', {
-#             'question': question,
-#             'error_message': "You didn't select a choice.",
-#         })
-#
-#     if not this_user.is_authenticated:
-#         return redirect('login')
-#     else:
-#         try:
-#             vote = Vote.objects.get(user=this_user, choice__question=question)
-#             vote.choice = selected_choice
-#
-#         except Vote.DoesNotExist:
-#             vote = Vote.objects.create(user=this_user, choice=selected_choice)
-#
-#     vote.save()
-#
-    # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
 @login_required
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     """ Vote view for the polls app. """
