@@ -58,6 +58,15 @@ python manage.py runserver
 ```
 To stop the server, you can press `Ctrl-C` in the terminal.
 
+### Demo Account:
+| Username | Password |
+|----------|----------|
+| demo1    | easy1    |
+| demo2    | easy2    |
+| demo3    | easy3    |
+| demo4    | easy4    |
+| demo5    | easy5    |
+
 ## Project Documents
 
 All project documents are in the [Project Wiki](../../wiki/Home).
@@ -67,6 +76,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Development Plan](../../wiki/Development-Plan)
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan)
 - [Iteration 2 Plan](../../wiki/Iteration-2-Plan)
+- [Iteration 3 Plan](../../wiki/Iteration-3-Plan)
 - [Project Board](../../projects?query=is%3Aopen)
 
 [django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)

@@ -1,12 +1,14 @@
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
-from .models import Question, Choice
-from django.shortcuts import get_object_or_404, render
+from .models import Question, Choice, Vote
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.http import Http404
-
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 
 class IndexView(generic.ListView):
@@ -25,10 +27,10 @@ class IndexView(generic.ListView):
         Returns:
             QuerySet: A queryset containing the latest published questions.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     """ Detail view for the polls app. """
     model = Question
     template_name = 'polls/detail.html'
@@ -61,67 +63,52 @@ class ResultsView(generic.DetailView):
             raise Http404
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    """ Index view for the polls app.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered index.html.
-    """
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
-
-
-def detail(request: HttpRequest, question_id: int) -> HttpResponse:
-    """ Detail view for the polls app.
-
-    Args:
-        request (HttpRequest): Object that contains metadata about the request.
-        question_id (int): The id of the question.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered detail.html.
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
-
-
-def results(request: HttpRequest, question_id: int) -> HttpResponse:
-    """ Results view for the polls app.
-
-    Args:
-        request (HttpRequest): Object that contains metadata about the request.
-        question_id (int): The id of the question.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered results.html.
-    """
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
-
-
+@login_required
 def vote(request: HttpRequest, question_id: int) -> HttpResponse:
-    """ Vote view for the polls app.
-    Args:
-        request (HttpRequest): Object that contains metadata about the request.
-        question_id (int): The id of the question.
-
-    Returns:
-        HttpResponse: A HttpResponse object containing the rendered results.html.
-    """
+    """ Vote view for the polls app. """
     question = get_object_or_404(Question, pk=question_id)
+    this_user = request.user
+
+    if not this_user.is_authenticated:
+        return redirect('login')
+
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
+
+    try:
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        vote.choice = selected_choice
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You have already voted for this question.❗️",
+        })
+    except Vote.DoesNotExist:
+        vote = Vote.objects.create(user=this_user, choice=selected_choice)
+
+    vote.save()
+
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def signup(request) -> HttpResponse:
+    """Register a new user."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid(): 
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_passwd = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_passwd)
+            login(request, user)
+
+        return redirect('polls:index')
+
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        form = UserCreationForm()
+
+    return render(request, 'registration/signup.html', {'form': form})
