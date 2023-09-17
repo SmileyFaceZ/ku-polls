@@ -11,10 +11,16 @@
 <body>
     <form action="{% url 'polls:vote' question.id %}" method="post" onsubmit="return confirmVote()">
         {% csrf_token %}
+
         <legend>
             <h1 style="color:MediumSeaGreen; text-align:center;">{{ question.question_text }}</h1>
         </legend>
         <hr>
+        {% if has_voted %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                You already voted choice {{ choice_text }}.❗️
+            </div>
+        {% endif %}
         {% if question.id == 2 %}
         <div style="padding-left: 50px; padding-bottom: 30px;">
             <img src="https://en.eng.ku.ac.th/wp-content/uploads/2023/03/EngineeringZone-Eng-1-1024x765.jpg" alt="KU Engineering Building" title="KU Engineering Building" width="500" height="400">
