@@ -37,8 +37,8 @@
 
     <div class="user-login">
         {% if user.is_authenticated %}
-            <div class="alert alert-success" role="alert">
-                Welcome back, {{ user.username | title }}
+            <div class="alert alert-info" role="alert">
+                <h4><i>Welcome back, {{ user.username | title }} 👋🏻</i></h4>
             </div>
         {% endif %}
     </div>
@@ -46,9 +46,22 @@
     {% if latest_question_list %}
         <ul>
         {% for question in latest_question_list %}
-            <li><h2><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></h2></li>
-            <a href="{% url 'polls:results' question.id %}"><button type="button" class="btn btn-warning">Results</button></a>
-            <hr>
+            <br>
+            {% if message %}
+                {% if choice_id == question.id %}
+                    <span class="alert alert-success alert-dismissible" role="alert">{{ message }}</span>
+                    <br><br>
+                    <h2><a href="{% url 'polls:detail' question.id %}" class="question-text">{{ question.question_text }}</a></h2>
+                    <a href="{% url 'polls:results' question.id %}"><button type="button" class="btn btn-warning">Results</button></a>
+                    <hr>
+                {% endif %}
+            {% endif %}
+
+            {% if choice_id != question.id %}
+            <h2><a href="{% url 'polls:detail' question.id %}" class="question-text">{{ question.question_text }}</a></h2>
+                <a href="{% url 'polls:results' question.id %}"><button type="button" class="btn btn-warning">Results</button></a>
+                <hr>
+            {% endif %}
         {% endfor %}
         </ul>
     {% else %}

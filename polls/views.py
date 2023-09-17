@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
-from .models import Question, Choice, Vote
+from polls.models import Question, Choice, Vote
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -43,8 +43,25 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
     def get(self, request: HttpRequest, **kwargs) -> HttpResponse:
         question = get_object_or_404(Question, pk=kwargs['pk'])
-        if question.can_vote():
-            return render(request, 'polls/detail.html', {'question': question})
+        this_user = request.user
+
+        try:
+            vote = Vote.objects.get(user=this_user, choice__question=question)
+            selected_choice = vote.choice
+            has_voted = True
+        except Vote.DoesNotExist:
+            has_voted = False
+            selected_choice = None
+
+        context = {
+            'question': question,
+            'has_voted': has_voted,
+            'choice_text': selected_choice,
+            'selected_choice': selected_choice,
+        }
+
+        if has_voted or question.can_vote():
+            return render(request, 'polls/detail.html', context)
         else:
             raise Http404
 
@@ -77,20 +94,22 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "You didn't select a choice.",
+            'error_message': "You didn't select a choice.❗",
         })
 
     try:
         vote = Vote.objects.get(user=this_user, choice__question=question)
         vote.choice = selected_choice
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': "You have already voted for this question.❗️",
-        })
+        question_objects = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+        vote.save()
+        return render(request, 'polls/index.html',
+                      {'message': '⭐️ Vote successfully updated ⭐️️',
+                       'latest_question_list': question_objects,
+                       'choice_id': question_id})
+
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
-
-    vote.save()
+        vote.save()
 
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 

@@ -1,6 +1,6 @@
-li a {
+.question-text {
     color: green;
-    font-family: 'papyrus', 'Fantasy';
+    font-family: Courier, monospace;
 }
 
 body {
