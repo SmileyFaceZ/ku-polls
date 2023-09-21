@@ -47,11 +47,11 @@ pip list
 
 To execute the test, run the following command:
 ```commandline
-python manage.py test
+python manage.py test polls
 ```
 or
 ```commandline
-python3 manage.py test
+python3 manage.py test polls
 ```
 
 ## Step 5: Database migrations
