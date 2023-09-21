@@ -17,46 +17,59 @@ Clone the repository and using this command on terminal.
 git clone https://github.com/SmileyFaceZ/ku-polls.git
 ```
 
-### Installing:
+### Installiation:
 
-To check that your are working on the correct directory (ku-polls), use this command.
+Install and set up a project using the [Installation](Installation.md) guide.
+
+### Run server:
+Launch the server by running the following command:
+```commandline
+python manage.py runserver
+```
+or
+```commandline
+python3 manage.py runserver
+```
+To stop the server, simply press `Ctrl-C` in the terminal.
+
+#### Create a virtual environment and activate it
+To create a virtual environment, run the following command:
+
+```commandline
+python -m venv venv
+```
+or 
+```commandline
+python3 -m venv venv
+```
+
+To activate the virtual environment, use one of the following commands:
 
 Windows
 ```commandline
-cd
+venv\Scripts\activate
 ```
 
 macOS / Linux:
 ```commandline
-pwd
+source venv/bin/activate
 ```
 
-If you are not in the correct directory, change to the project directory before proceeding with the installation.
-```commandline
-cd ku-polls
-```
+The command prompt should changes to show the virtual env is active.
 
-Installing the required modules by using code blocks
-```commandline
-pip install -r requirements.txt
-```
+> #Windows
+> 
+> (env) cmd>
+> 
+> #macOS / Linux
+> 
+> (env) $
 
-To check if all modules are installed, use this command.
-```commandline
-pip list
-```
+If you want to deactivate the virtual environment, run the following command:
 
-To create a new database using this command.
 ```commandline
-python manage.py migrate
+deactivate
 ```
-
-### Running the server:
-Run the following command to start the server.
-```commandline
-python manage.py runserver
-```
-To stop the server, you can press `Ctrl-C` in the terminal.
 
 ### Demo Account:
 | Username | Password |
@@ -77,6 +90,14 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan)
 - [Iteration 2 Plan](../../wiki/Iteration-2-Plan)
 - [Iteration 3 Plan](../../wiki/Iteration-3-Plan)
+- [Iteration 4 Plan](../../wiki/Iteration-4-Plan)
 - [Project Board](../../projects?query=is%3Aopen)
 
-[django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
+## Django Tutorial:
+- [Part 1](https://docs.djangoproject.com/en/4.1/intro/tutorial01/): Creation of a basic poll application.
+- [Part 2](https://docs.djangoproject.com/en/4.1/intro/tutorial02/): Set up the database.
+- [Part 3](https://docs.djangoproject.com/en/4.1/intro/tutorial03/): Focus on creating the public interface.
+- [Part 4](https://docs.djangoproject.com/en/4.1/intro/tutorial04/): Focus on form processing and cutting down our code.
+- [Part 5](https://docs.djangoproject.com/en/4.1/intro/tutorial05/): Built a web-poll application and create some automated tests.
+- [Part 6](https://docs.djangoproject.com/en/4.1/intro/tutorial06/): Add a stylesheet and an image.
+- [Part 7](https://docs.djangoproject.com/en/4.1/intro/tutorial07/): Focus on customizing Django’s automatically-generated admin site.

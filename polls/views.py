@@ -31,7 +31,11 @@ class IndexView(generic.ListView):
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
-    """ Detail view for the polls app. """
+    """ Detail view for the polls app.
+    Methods:
+        get_queryset(): Returns the question is less than or equal to the current time.
+        get(): Returns the detail view for a given question.
+    """
     model = Question
     template_name = 'polls/detail.html'
 
@@ -67,7 +71,11 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class ResultsView(generic.DetailView):
-    """ Results view for the polls app. """
+    """ Results view for the polls app.
+
+    Methods:
+        get(): Returns the results for a given question.
+    """
     model = Question
     template_name = 'polls/results.html'
 
