@@ -21,6 +21,48 @@ git clone https://github.com/SmileyFaceZ/ku-polls.git
 
 Install and set up a project using the [Installation](Installation.md) guide.
 
+### Run server:
+Launch the server by running the following command:
+```commandline
+python manage.py runserver
+```
+To stop the server, simply press `Ctrl-C` in the terminal.
+
+#### Create a virtual environment and activate it
+To create a virtual environment, run the following command:
+
+```commandline
+python -m venv venv
+```
+
+To activate the virtual environment, use one of the following commands:
+
+Windows
+```commandline
+venv\Scripts\activate
+```
+
+macOS / Linux:
+```commandline
+source venv/bin/activate
+```
+
+The command prompt should changes to show the virtual env is active.
+
+> #Windows
+> 
+> (env) cmd>
+> 
+> #macOS / Linux
+> 
+> (env) $
+
+If you want to deactivate the virtual environment, run the following command:
+
+```commandline
+deactivate
+```
+
 ### Demo Account:
 | Username | Password |
 |----------|----------|
@@ -40,6 +82,14 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 1 Plan](../../wiki/Iteration-1-Plan)
 - [Iteration 2 Plan](../../wiki/Iteration-2-Plan)
 - [Iteration 3 Plan](../../wiki/Iteration-3-Plan)
+- [Iteration 4 Plan](../../wiki/Iteration-4-Plan)
 - [Project Board](../../projects?query=is%3Aopen)
 
-[django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
+## Django Tutorial:
+- [Part 1](https://docs.djangoproject.com/en/4.1/intro/tutorial01/): Creation of a basic poll application.
+- [Part 2](https://docs.djangoproject.com/en/4.1/intro/tutorial02/): Set up the database.
+- [Part 3](https://docs.djangoproject.com/en/4.1/intro/tutorial03/): Focus on creating the public interface.
+- [Part 4](https://docs.djangoproject.com/en/4.1/intro/tutorial04/): Focus on form processing and cutting down our code.
+- [Part 5](https://docs.djangoproject.com/en/4.1/intro/tutorial05/): Built a web-poll application and create some automated tests.
+- [Part 6](https://docs.djangoproject.com/en/4.1/intro/tutorial06/): Add a stylesheet and an image.
+- [Part 7](https://docs.djangoproject.com/en/4.1/intro/tutorial07/): Focus on customizing Django’s automatically-generated admin site.
