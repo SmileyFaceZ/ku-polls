@@ -1,0 +1,31 @@
+* {
+    font-family: Courier, monospace;
+}
+
+.question-text {
+    color: green;
+}
+
+body {
+    background: white url("images/background.png") no-repeat;
+}
+
+.question {
+    border-style: groove;
+    border-radius: 5px;
+}
+
+.status {
+    color: #7D7C7C;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-left: 10px;
+}
+
+.all-button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

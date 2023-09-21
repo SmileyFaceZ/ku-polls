@@ -2,21 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'polls/signup_style.css' %}">
     <title>Signup</title>
 </head>
 <body>
-    <h2>Signup</h2>
-    <form method="POST" action="{% url 'signup' %}">
-        {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td colspan="2">
-                    <button type="submit">Signup</button>
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                <a href="{% url 'polls:index' %}" class="home-btn">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/home-button-icon.png"
+                         style="width:40px; height:40px; margin-top: 10px; margin-left:10px">
+                </a>
+                <form class="login" method="post" action="{% url 'login' %}">
+                    <span style="color: green; font-size: 40px;"><b>Signup</b></span>
+                    {% csrf_token %}
+                    <div class="login__field">
+                        <div style="color: #435334;">
+                            <h3>Username:</h3>
+                            {{ form.username }}
+                            {{ form.table }}
+                        </div>
+                    </div>
+                    <div class="login__field">
+                        <div style="color: #435334;">
+                            <h3>Password:</h3>
+                            {{ form.password1 }}
+                        </div>
+                    </div>
+
+                    <div class="login__field">
+                        <div style="color: #435334;">
+                            <h3>Confirm Password:</h3>
+                            {{ form.password1 }}
+                        </div>
+                    </div>
+
+                    <input type="submit" class="button login__submit" value="Signup">
+                        <i class="button__icon fas fa-chevron-right"></i>
                     <input type="hidden" name="next" value="{{ next }}">
-                </td>
-            </tr>
-        </table>
-    </form>
+                </form>
+                <hr style="border: 1px dashed lightgrey;">
+                <div>
+                    <a href="{% url 'login' %}">
+                        <div style="text-align: center; color: white; font-size: 15px; margin-top: 15px;"><b>Login</b></div>
+                    </a>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

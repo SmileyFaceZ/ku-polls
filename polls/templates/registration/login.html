@@ -1,77 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Login</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--    <h2>Login</h2>-->
-<!--&lt;!&ndash;    <form method="post">&ndash;&gt;-->
-<!--&lt;!&ndash;        {% csrf_token %}&ndash;&gt;-->
-<!--&lt;!&ndash;        {{ form.as_p }}&ndash;&gt;-->
-<!--&lt;!&ndash;        <p>&ndash;&gt;-->
-<!--&lt;!&ndash;        <button type="submit">Login</button>&ndash;&gt;-->
-<!--&lt;!&ndash;        </p>&ndash;&gt;-->
-<!--&lt;!&ndash;        <input type="hidden" name="next" value="{{next}}"/>&ndash;&gt;-->
-<!--&lt;!&ndash;    </form>&ndash;&gt;-->
-
-<!--    {% if form.errors %}-->
-<!--        <p>Your username and password didn't match. Please try again.</p>-->
-<!--    {% endif %}-->
-
-<!--    {% if next %}-->
-<!--        {% if user.is_authenticated %}-->
-<!--          <p>Your account doesn't have access to this page. To proceed,-->
-<!--          please login with an account that has access.</p>-->
-<!--        {% else %}-->
-<!--          <p>Please login to see this page.</p>-->
-<!--        {% endif %}-->
-<!--    {% endif %}-->
-
-<!--    <form method="post" action="{% url 'login' %}">-->
-<!--    {% csrf_token %}-->
-<!--    <table>-->
-<!--      <tr>-->
-<!--        <td>{{ form.username.label_tag }}</td>-->
-<!--        <td>{{ form.username }}</td>-->
-<!--      </tr>-->
-<!--      <tr>-->
-<!--        <td>{{ form.password.label_tag }}</td>-->
-<!--        <td>{{ form.password }}</td>-->
-<!--      </tr>-->
-<!--    </table>-->
-<!--    <input type="submit" value="login">-->
-<!--    <input type="hidden" name="next" value="{{ next }}">-->
-<!--    </form>-->
-
-<!--    {# Assumes you setup the password_reset view in your URLconf #}-->
-<!--    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>-->
-
-<!--    <form action="" method="post">-->
-<!--        {% csrf_token %}-->
-<!--        {% if form.email.errors %}-->
-<!--        {{ form.email.errors }}-->
-<!--        {% endif %}-->
-<!--          <p>{{ form.email }}</p>-->
-<!--        <input type="submit" class="btn btn-default btn-lg" value="Reset password">-->
-<!--    </form>-->
-
-
-<!--</body>-->
-<!--</html>-->
-
-<!--    <form method="post" action="{% url 'login' %}">-->
-<!--    {% csrf_token %}-->
-<!--    <table>-->
-<!--      <tr>-->
-<!--        <td>{{ form.username }}</td>-->
-<!--      </tr>-->
-<!--      <tr>-->
-<!--        <td>{{ form.password }}</td>-->
-<!--      </tr>-->
-<!--    </table>-->
-<!--    </form>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,31 +10,36 @@
     <div class="container">
         <div class="screen">
             <div class="screen__content">
+                <a href="{% url 'polls:index' %}" class="home-btn">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/home-button-icon.png"
+                         style="width:40px; height:40px; margin-top: 10px; margin-left:10px">
+                </a>
                 <form class="login" method="post" action="{% url 'login' %}">
+                    <span style="color: purple; font-size: 40px;"><b>login</b></span>
                     {% csrf_token %}
                     <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <div class="user-title">
+                        <div style="color: #5B0888;">
                             <h3>Username:</h3>
                             {{ form.username }}
                         </div>
-<!--                        <input type="text" class="login__input" placeholder="Username">-->
                     </div>
+
                     <div class="login__field">
-                        <i class="login__icon fas fa-lock"></i>
-                        <div class="user-title">
+                        <div style="color: #5B0888;">
                             <h3>Password:</h3>
                             {{ form.password }}
                         </div>
-<!--                        <input type="password" class="login__input" placeholder="Password">-->
                     </div>
 
                     <input type="submit" class="button login__submit" value="Login">
-<!--                        <span class="button__text">Log In Now</span>-->
-<!--                        <input type="submit" value="login">-->
-                        <i class="button__icon fas fa-chevron-right"></i>
                     <input type="hidden" name="next" value="{{ next }}">
                 </form>
+                <hr style="border: 1px dashed lightgrey;">
+                <div>
+                    <a href="{% url 'signup' %}">
+                        <div style="text-align: center; color: white; font-size: 15px; margin-top: 10%;"><b>Signup Now</b></div>
+                    </a>
+                </div>
             </div>
             <div class="screen__background">
                 <span class="screen__background__shape screen__background__shape4"></span>
