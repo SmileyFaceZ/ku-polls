@@ -49,6 +49,10 @@ To execute the test, run the following command:
 ```commandline
 python manage.py test
 ```
+or
+```commandline
+python3 manage.py test
+```
 
 ## Step 5: Database migrations
 
@@ -56,9 +60,17 @@ To create a new database, run the following command:
 ```commandline
 python manage.py migrate
 ```
+or
+```commandline
+python3 manage.py migrate
+```
 
 Load the initial data for the polls app, run the following command:
 
 ```commandline
-python manage loaddata data/polls.json data/users.json
+python manage.py loaddata data/polls.json data/users.json
+```
+or
+```commandline
+python3 manage.py loaddata data/polls.json data/users.json
 ```
