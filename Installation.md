@@ -5,7 +5,7 @@
 #### [Step 2](#step-2-check-the-directory-1): Check the Directory
 #### [Step 3](#step-3-install-the-required-modules-1) Install the Required Modules
 #### [Step 4](#step-4-run-tests-1): Run Tests
-#### [Step 5](#step-4-database-migrations-1): Database Migrations
+#### [Step 5](#step-5-database-migrations-1): Database Migrations
 
 ## Step 1: Clone the repository
 Clone the repository and using this command on terminal:
