@@ -1,13 +1,13 @@
 # Run and Install
 
 ### Steps to install and run the project.
-#### [Step 1](#step-1-clone-the-repository): Clone the Repository
-#### [Step 2](#step-2-check-the-directory): Check the Directory
-#### [Step 3](#step-3-install-the-required-modules): Install the Required Modules
-#### [Step 4](#step-4-create-a-virtual-environment-and-activate-it): Create a Virtual Environment and Activate It
-#### [Step 5](#step-5-run-tests): Run Tests
-#### [Step 6](#step-6-database-migrations): Database Migrations
-#### [Step 7](#step-7-run-the-server): Run the Server
+#### [Step 1](#step-1:-clone-the-repository): Clone the Repository
+#### [Step 2](#step-2:-check-the-directory): Check the Directory
+#### [Step 3](#step-3:-install-the-required-modules): Install the Required Modules
+#### [Step 4](#step-4:-create-a-virtual-environment-and-activate-it): Create a Virtual Environment and Activate It
+#### [Step 5](#step-5:-run-tests): Run Tests
+#### [Step 6](#step-6:-database-migrations): Database Migrations
+#### [Step 7](#step-7:-run-server): Run Server
 
 ## Step 1: Clone the repository
 Clone the repository and using this command on terminal:
@@ -80,7 +80,7 @@ If you want to deactivate the virtual environment, run the following command:
 deactivate
 ```
 
-## Step 5: Run test
+## Step 5: Run tests
 
 To execute the test, run the following command:
 ```commandline
