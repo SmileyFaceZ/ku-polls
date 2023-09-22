@@ -21,17 +21,6 @@ git clone https://github.com/SmileyFaceZ/ku-polls.git
 
 Install and set up a project using the [Installation](Installation.md) guide.
 
-### Run server:
-Launch the server by running the following command:
-```commandline
-python manage.py runserver
-```
-or
-```commandline
-python3 manage.py runserver
-```
-To stop the server, simply press `Ctrl-C` in the terminal.
-
 #### Create a virtual environment and activate it
 To create a virtual environment, run the following command:
 
@@ -70,6 +59,17 @@ If you want to deactivate the virtual environment, run the following command:
 ```commandline
 deactivate
 ```
+
+### Run server:
+Launch the server by running the following command:
+```commandline
+python manage.py runserver
+```
+or
+```commandline
+python3 manage.py runserver
+```
+To stop the server, simply press `Ctrl-C` in the terminal.
 
 ### Demo Account:
 | Username | Password |
