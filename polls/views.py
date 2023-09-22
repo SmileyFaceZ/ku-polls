@@ -22,18 +22,21 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Returns the last five published questions (excluding those set to be published in the future).
+        Returns the last five published questions
+        (excluding those set to be published in the future).
 
         Returns:
             QuerySet: A queryset containing the latest published questions.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+        return Question.objects.filter(pub_date__lte=timezone.now())\
+            .order_by('-pub_date')
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
     """ Detail view for the polls app.
     Methods:
-        get_queryset(): Returns the question is less than or equal to the current time.
+        get_queryset(): Returns the question is less than or
+        equal to the current time.
         get(): Returns the detail view for a given question.
     """
     model = Question
@@ -81,9 +84,11 @@ class ResultsView(generic.DetailView):
 
     def get(self, request: HttpRequest, **kwargs) -> HttpResponse:
         question = get_object_or_404(Question, pk=kwargs['pk'])
-        total_votes = sum([choice.votes for choice in question.choice_set.all()])
+        total_votes = \
+            sum([choice.votes for choice in question.choice_set.all()])
         if question.can_vote():
-            return render(request, 'polls/results.html', {'question': question, 'total_votes': total_votes})
+            context = {'question': question, 'total_votes': total_votes}
+            return render(request, 'polls/results.html', context)
         else:
             raise Http404
 
@@ -108,7 +113,8 @@ def vote(request: HttpRequest, question_id: int) -> HttpResponse:
     try:
         vote = Vote.objects.get(user=this_user, choice__question=question)
         vote.choice = selected_choice
-        question_objects = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
+        question_objects = Question.objects.filter(
+            pub_date__lte=timezone.now()).order_by('-pub_date')
         vote.save()
         return render(request, 'polls/index.html',
                       {'message': '⭐️ Vote successfully updated ⭐️️',
@@ -126,7 +132,7 @@ def signup(request) -> HttpResponse:
     """Register a new user."""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid(): 
+        if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_passwd = form.cleaned_data.get('password1')
