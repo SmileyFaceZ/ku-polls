@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 
 class IndexView(generic.ListView):
@@ -49,8 +50,16 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request: HttpRequest, **kwargs) -> HttpResponse:
-        question = get_object_or_404(Question, pk=kwargs['pk'])
+
         this_user = request.user
+
+        try:
+            question = get_object_or_404(Question, pk=kwargs["pk"])
+        except Http404:
+            messages.error(
+                request,
+                f"Question number {kwargs['pk']} does not exists.❗️")
+            return redirect("polls:index")
 
         try:
             vote = Vote.objects.get(user=this_user, choice__question=question)
@@ -83,14 +92,18 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
     def get(self, request: HttpRequest, **kwargs) -> HttpResponse:
-        question = get_object_or_404(Question, pk=kwargs['pk'])
+        try:
+            question = get_object_or_404(Question, pk=kwargs["pk"])
+        except Http404:
+            messages.error(
+                request,
+                f"Result question number {kwargs['pk']} does not exists.❗️")
+            return redirect("polls:index")
+
         total_votes = \
             sum([choice.votes for choice in question.choice_set.all()])
-        if question.can_vote():
-            context = {'question': question, 'total_votes': total_votes}
-            return render(request, 'polls/results.html', context)
-        else:
-            raise Http404
+        context = {'question': question, 'total_votes': total_votes}
+        return render(request, 'polls/results.html', context)
 
 
 @login_required

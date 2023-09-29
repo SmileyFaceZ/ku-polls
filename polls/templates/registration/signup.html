@@ -14,6 +14,13 @@
                     <img src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/home-button-icon.png"
                          style="width:40px; height:40px; margin-top: 10px; margin-left:10px">
                 </a>
+                <ul style="font-size: 14px; margin-left: 10%;">
+                    <li>Your password can’t be too similar to your other personal information.</li>
+                    <li>Your password required 150 characters or fewer. Letters, digits and @/./+/-/_ only.</li>
+                    <li>Your password must contain at least 8 characters.</li>
+                    <li>Your password can’t be a commonly used password.</li>
+                    <li>Your password can’t be entirely numeric.</li>
+                </ul>
                 <form class="login" method="post" action="{% url 'login' %}">
                     <span style="color: green; font-size: 40px;"><b>Signup</b></span>
                     {% csrf_token %}
