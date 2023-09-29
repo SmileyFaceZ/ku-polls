@@ -16,7 +16,7 @@ body {
 }
 
 .status {
-    color: #7D7C7C;
+    color: red;
     margin-left: 10px;
     margin-bottom: 10px;
 }

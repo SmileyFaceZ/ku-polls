@@ -43,6 +43,15 @@
             </div>
         {% endif %}
     </div>
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <span class="message">
+                <span class="alert alert-danger" role="alert">{{ message }}</span>
+            </span>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     {% if latest_question_list %}
         <ul>
