@@ -46,6 +46,7 @@
     {% if messages %}
     <ul>
         {% for message in messages %}
+            <br>
             <span class="message">
                 <span class="alert alert-danger" role="alert">{{ message }}</span>
             </span>
@@ -80,7 +81,8 @@
                         <i>Status: ✅</i><br>
                         <i>End Poll {{ question.end_date}}</i>
                     {% else %}
-                        <i>Status: ❌</i>
+                        <i>Status: ❌</i><br>
+                        <i>End Poll {{ question.end_date}}</i>
                     {% endif %}
                 </h4>
                 <div class="all-button">

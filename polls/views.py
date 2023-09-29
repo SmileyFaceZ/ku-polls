@@ -100,13 +100,10 @@ class ResultsView(generic.DetailView):
                 f"Result question number {kwargs['pk']} does not exists.❗️")
             return redirect("polls:index")
 
-        if question.can_vote():
-            total_votes = \
-                sum([choice.votes for choice in question.choice_set.all()])
-            context = {'question': question, 'total_votes': total_votes}
-            return render(request, 'polls/results.html', context)
-        else:
-            raise Http404
+        total_votes = \
+            sum([choice.votes for choice in question.choice_set.all()])
+        context = {'question': question, 'total_votes': total_votes}
+        return render(request, 'polls/results.html', context)
 
 
 @login_required
